@@ -1,0 +1,16 @@
+法一: Start 'gparted' and make the partitions
+
+法二：from the terminal
+  sudo fdisk -l     #list all disks
+  sudo fdisk /dev/xxx        #figure out witch disk is your card
+  sudo mkfs -t ext4 /dev/xxx2                     #create filesystems
+  
+  
+some fdisk commands:
+
+  d delete partition
+  n create a partition
+  l list types
+  t set type (c for fat32. 83 for linux)
+  w save
+  q quit without making any changes  
