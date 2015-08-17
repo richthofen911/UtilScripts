@@ -1,0 +1,14 @@
+::因修改/etc/ssh权限导致的ssh不能连接异常解决方法
+  现象：
+    $ssh XXX@192.168.5.21
+    出现以下问题
+    Read from socket failed: Connection reset by peer
+
+  起因；
+    $sudo chmod 777 /etc/  -R (千万不要做，这是一个误操作)
+    导致了上面的结果
+
+  解决方法：
+    #chmod 400 /etc/ssh/* 
+
+  重新连接就可以了。
