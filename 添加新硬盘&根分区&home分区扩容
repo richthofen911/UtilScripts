@@ -1,0 +1,77 @@
+http://xuxuezhe.blog.51cto.com/1636138/1219601
+
+::对于linux系统在安装的时候由于经验不足或者是磁盘的问题，在分区的时候往往会有一定的考虑不全面，当使用一定的时间发现
+  根分区空间严重的不足。如果采用的是分区的物理分区的形式安装操作系统就悲剧了。如果采用的是逻辑卷的形式来安装系统管理
+  硬盘分区的，则可以动态扩容逻辑卷的大小以达到扩容根分区的目的。
+  
+  1. df -hl  (disk filesystem, -h means human-readable) 察看当前各分区大小
+      ilesystem               Size  Used Avail Use% Mounted on
+      devtmpfs                  16G     0   16G   0% /dev
+      tmpfs                     16G  105M   16G   1% /dev/shm
+      tmpfs                     16G  1.1M   16G   1% /run
+      tmpfs                     16G     0   16G   0% /sys/fs/cgroup
+      /dev/mapper/fedora-root   50G   19G   28G  41% /
+      tmpfs                     16G  3.4M   16G   1% /tmp
+      /dev/sdb2                477M  141M  307M  32% /boot
+      /dev/sdb1                200M  9.6M  191M   5% /boot/efi
+      /dev/mapper/fedora-home  443G   44G  381G  11% /home
+      tmpfs                    3.2G   28K  3.2G   1% /run/user/1000
+      
+      对home分区来说。它的所在卷组为/dev/mapper/fedora-home
+                              组名为fedora
+                              卷名为home
+      
+  2. sudo fdisk -l     查看当前挂载的所有磁盘
+      Device     Boot Start        End    Sectors   Size Id Type
+        /dev/sda1        2048 1953525167 1953523120 931.5G 8e Linux LVM
+      Device       Start       End   Sectors   Size Type
+        /dev/sdb1     2048    411647    409600   200M EFI System
+        /dev/sdb2   411648   1435647   1024000   500M Linux filesystem
+        /dev/sdb3  1435648 234440703 233005056 111.1G Linux LVM
+      Device     Boot Start      End  Sectors  Size Id Type
+
+      此处sda是挂载的额外硬盘，所以下一步fdisk进入sda。初始状态下应该没有1，1是创建物理卷之后才会有
+      
+  3. sudo fdisk /dev/sda    进入sda
+  
+  4. 输入n创建一个分区，选择p创建主分区，在输入主分区号1表示创建第一个主分区。接这是输入分区的开始和结束，这里只
+        创建一个分区,所以分区的开始和结束都才用默认的大小;
+     输入P可以查看刚才已经创建好的分区信息;
+     输入t改变分区的格式为8e 即(Linux LVM)逻辑卷格式;
+     最后输入W保存退出分区界面。
+     
+  5. pvcreate /dev/sdb1  创建物理卷(physical volume)
+  
+  6. pvdisplay 显示物理卷（或用pvscan)
+  
+  7. vgdisplay  显示所有卷组 (volume groups display)
+      --- Volume group ---
+      VG Name               fedora
+      System ID             
+      Format                lvm2
+      Metadata Areas        2
+      Metadata Sequence No  8
+      VG Access             read/write
+      VG Status             resizable
+      MAX LV                0
+      Cur LV                3
+      Open LV               3
+      Max PV                0
+      Cur PV                2
+      Act PV                2
+      VG Size               1.02 TiB
+      PE Size               4.00 MiB
+      Total PE              266908
+      Alloc PE / Size       130827 / 511.04 GiB
+      Free  PE / Size       136081 / 531.57 GiB
+      VG UUID               sIqrDr-DAMy-Q88k-UIrm-uv7Z-Kf2O-t3Vcok
+      
+      Free PE 表示这个卷组所剩的容量
+  
+  8. vgextend fedora/dev/sda1  扩展这个卷组（把sda1加到组名为fedora卷组上）
+  
+  9. lvextend -L +100G /dev/mapper/fedora/home  把fedora卷组上的home分区扩大100G
+  
+  10.resize2fs /dev/fedora/home   让扩容立即生效
+  
+
