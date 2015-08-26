@@ -13,6 +13,9 @@ sudo apt-get install emacs -y
 
 ### change default keyboard layout from UK -> US
 sudo echo XKBLAYOUT=\"us\" >> /etc/default/keyboard #set keyboard layout to US
+### swap ctrl and capslock, need reboot to make it work
+sudo echo XKBOPTIONS=\"ctrl:swapcaps\" >> /etc/default/keyboard
+sudo dpkg-reconfigure -phigh console-setup
 
 ### configure my github ssh key and git account
 mkdir ~/.ssh
@@ -21,3 +24,7 @@ chmod 600 ~/.ssh/id_rsa
 ssh-add ~/.ssh/id_rsa
 git config --global user.name richthofen911
 git config --global user.email yichaoli.richthofen@gmail.com
+
+
+
+
