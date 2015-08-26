@@ -25,6 +25,11 @@ ssh-add ~/.ssh/id_rsa
 git config --global user.name richthofen911
 git config --global user.email yichaoli.richthofen@gmail.com
 
+### set emacs config file and basic config
+echo -e "(custom-set-variables '(inhibit-startup-screen t))\n(custom-set-faces )\n(setq make-backup-files nil)" > .emacs
+
+
+
 
 
 
