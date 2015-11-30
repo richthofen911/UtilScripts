@@ -1,0 +1,5 @@
+::upload 
+  sshpass -p "f264fecd50999999" scp $FILE_NAME root@159.203.15.175:/var/www/html/apps/
+  
+::download
+  sshpass -p "edison" scp user@host:remoteFilePat localSavePath
