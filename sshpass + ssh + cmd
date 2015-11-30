@@ -1,0 +1,1 @@
+sshpass -p "f264fecd50999999" ssh root@159.203.15.175 "rm /var/www/html/apps/$FILE_NAME"
