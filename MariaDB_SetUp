@@ -44,3 +44,7 @@
   step 3: Grant user connections from remote host
     GRANT ALL PRIVILEGES ON *.* TO 'root'@'%.%.%.%' IDENTIFIED BY 'my-new-password' WITH GRANT OPTION;
     
+
+::Start MySQL/MariaDB starts at boot:
+    systemctl enable mariadb  
+    
