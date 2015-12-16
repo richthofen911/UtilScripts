@@ -1,0 +1,46 @@
+::installation
+  sudo yum install mariadb-server mariadb
+  
+::secure after installation
+  mysql_secure_installtion
+  
+::login
+  mysql -u username -h hostname -P port_number -p(passwd)
+  *there might be a login issue to root account even after a fresh installation.  SOLOUTION: 
+    
+::allow remote login
+  (Background)
+  MariaDB packages bind MariaDB to 127.0.0.1 (the loopback IP address) by default as a security measure using 
+  the bind-address configuration directive. Old MySQL packages sometimes disabled TCP/IP networking altogether using 
+  the skip-networking directive. 
+  Before going in to how to configure these, let's explain what each of them actually does:
+  1) skip-networking is fairly simple. It just tells MariaDB to run without any of the TCP/IP networking options.
+  2) bind-address requires a little bit of background information. A given server usually has at least two networking 
+     interfaces (although this is not required) and can easily have more. The two most common are a Loopback network 
+     device and a physical Network Interface Card (NIC) which allows you to communicate with the network. 
+     MariaDB is bound to the loopback interface by default because it makes it impossible to connect to the TCP port 
+     on the server from a remote host (the bind-address must refer to a local IP address, or you will receive a fatal error 
+     and MariaDB will not start). This of course is not desirable if you want to use the TCP port from a remote host, so you 
+     must remove this bind-address directive (MariaDB only supports one bind-address, but binds 
+     to 0.0.0.0, or :: (every IP) if the bind-address directive is left out).
+  
+  step 1: Finding the defaults file
+    Common locations for defaults files:
+      * /etc/my.cnf                              (*nix/BSD)
+      * $MYSQL_HOME/my.cnf                       (*nix/BSD) *Most Notably /etc/mysql/my.cnf
+      * SYSCONFDIR/my.cnf                        (*nix/BSD)
+      * DATADIR\my.ini                           (Windows)
+      
+  step 2: Editing the defaults file
+    comment out these to lines:
+      skip-networking
+      ...
+      bind-address = <some ip-address>
+    to:
+      #skip-networking
+      ...
+      #bind-address = <some ip-address>
+      
+  step 3: Grant user connections from remote host
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%.%.%.%' IDENTIFIED BY 'my-new-password' WITH GRANT OPTION;
+    
