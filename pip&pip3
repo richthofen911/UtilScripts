@@ -1,0 +1,9 @@
+To use pip of python3 
+  python3-pip
+  
+
+If you have python3-pip installed and still pip3 can't be found once thing that might solve the issue is upgrading pip to the latest:
+
+  sudo python3 -m pip install -U pip
+
+This line should work in any distro and it would upgrade your pip3 binary to finally show back up
