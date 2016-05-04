@@ -1,0 +1,10 @@
+wget http://archive.raspberrypi.org/debian/pool/main/r/raspi-config/raspi-config_20121028_all.deb
+
+wget http://http.us.debian.org/debian/pool/main/t/triggerhappy/triggerhappy_0.3.4-2_armhf.deb
+
+wget http://http.us.debian.org/debian/pool/main/l/lua5.1/lua5.1_5.1.5-4+deb7u1_armhf.deb
+
+install triggerhappy, lua, and raspi-config by dpkg -i ***.deb
+
+
+run raspi-config
