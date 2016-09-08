@@ -1,6 +1,6 @@
 ### BEGIN INIT INFO
 # Provides:          scriptname
-# Required-Start:    $remote_fs $syslog # change or delete
+# Required-Start:    $remote_fs $syslog # change or delete. 有些需要network先启动获得ip地址不然出错，可以加 $network
 # Required-Stop:     $remote_fs $syslog # change or delete
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
