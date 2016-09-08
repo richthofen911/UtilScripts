@@ -1,10 +1,8 @@
-第一种方式：ln -s 建立启动软连接
-    在Linux中有7种运行级别（可在/etc/inittab文件设置），每种运行级别分别对应着/etc/rc.d/rc[0~6].d这7个目录
-    这7个目录中，每个目录分别存放着对应运行级别加载时需要关闭或启动的服务
-    由详细信息可以知道，其实每个脚本文件都对应着/etc/init.d/目录下具体的服务
-    K开头的脚本文件代表运行级别加载时需要关闭的，S开头的代表需要执行
-    因此，当我们需要开机启动自己的脚本时，只需要将可执行脚本丢在/etc/init.d目录下，然后在/etc/rc.d/rc*.d中建立软链接即可
-    例如： ln -s /etc/init.d/sshd /etc/rc.d/rc3.d/S100ssh
+第一种方式：建立启动软连接
+    先把要把要启动的脚本放到/etc/init.d目录下
+    然后设定启动级别，use LSBInitScripts (find in another file in this repo)
+    最后update-rc.d jiaoben脚本ming脚本名 default
+    
     此处sshd是具体服务的脚本文件，S100ssh是其软链接，S开头代表加载时自启动
 
 第二种方式：如果系统中已经存在某些服务（比如安装apache时就会有httpd服务项），可以使用 chkconfig
