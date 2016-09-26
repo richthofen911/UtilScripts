@@ -7,3 +7,6 @@
 # Short-Description: Start daemon at boot time
 # Description:       Enable service provided by daemon.
 ### END INIT INFO
+
+
+#### after creating the file, run 'update-rc.d filename defaults' in the command line
