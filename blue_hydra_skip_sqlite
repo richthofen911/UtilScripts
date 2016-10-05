@@ -1,0 +1,31 @@
+# skip the step of reading blue hydra data from its sqlite db. Instead, directly sending the required data to 
+# mysql db and influx db
+# add this in Blue Hydra's Runner file
+
+require 'influxdb'
+require 'mysql2'
+
+dbname_mysql = 'bluehydra'
+dbname_influx = 'bluehydra'
+
+tablename_mysql = 'Device'
+tablename_influx = 'Device'
+
+mysql = Mysql2::Client.new(:host => "localhost", :username => "yli", :password => "qwe", :database => dbname_mysql)
+influxdb = InfluxDB::Client.new dbname_influx
+
+# insert into influx
+loop do
+  data = {
+    values: { value: Value.next },
+    tags:   { wave: 'sine' } # tags are optional
+
+  influxdb.write_point(tablename_influx, data)
+
+  sleep 1
+end
+
+# insert into mysql
+client.query("insert into #{tablename_mysql} (Addr, UUID) VALUES ('ab:cd:ef', '15717843')")
+
+
