@@ -1,6 +1,7 @@
 # Skip the step of reading blue hydra data from its sqlite db. Instead, directly sending the required data to 
 # mysql db and influx db
 # Add this in Blue Hydra's modeling file device.rb
+# The object containing all properties ready to be is available around line 197 in the device.rb file 
 
 require 'mysql2'
 require 'influxdb'
