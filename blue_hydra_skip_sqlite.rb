@@ -11,8 +11,8 @@ def connect_to_db_mysql(hostname, username, password, dbname)
   return mysql
 end
 
-def connect_to_db_influx(dbname)
-  influx = InfluxDB::Client.new dbname
+def connect_to_db_influx(hostname)
+  influx = InfluxDB::Client.new host: hostname
   return influx
 end
 
