@@ -8,4 +8,4 @@
   gnome-disks工具
 
 ::Mac
-support.apple.com/en-ca/guide/disk-utility/restore-a-disk-image-to-a-disk-dskutl14078/mac
+  diskutil eraseDisk JHFS+ VolumeName /dev/disk2
